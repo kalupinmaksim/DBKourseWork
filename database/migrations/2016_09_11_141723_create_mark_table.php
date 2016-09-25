@@ -14,7 +14,7 @@ class CreateMarkTable extends Migration
     public function up()
     {
         Schema::create('marks', function (Blueprint $table) {
-            $table->increments('id_mark');
+            $table->increments('id');
             $table->string('name');
         });
     }

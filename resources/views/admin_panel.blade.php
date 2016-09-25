@@ -71,6 +71,38 @@
                             </div>
                         </div>
                         <br>
+                        <div class="form-group is-empty">
+                            <div class="form-group label-floating  col-md-2">
+                                <label class="control-label" for="enginepower">Мощность Двигателя</label>
+                                <input class="form-control" id="enginepower" name="enginepower" type="text">
+                            </div>
+
+                            <div class="form-group label-floating col-md-2">
+                                <label class="control-label" for="focusedInput2">КПП</label>
+                                <input class="form-control" id="focusedInput2" name="charct2" type="text">
+                            </div>
+
+                            <div class="form-group label-floating col-md-2">
+                                <label class="control-label" for="focusedInput2">Топливо</label>
+                                <input class="form-control" id="focusedInput2" name="charct3" type="text">
+                            </div>
+
+                            <div class="form-group label-floating col-md-2">
+                                <label class="control-label" for="maximumSpeed">Макс. скорость</label>
+                                <input class="form-control" id="maximumSpeed" name="charct4" type="text">
+                            </div>
+
+                            <div class="form-group label-floating col-md-2">
+                                <label class="control-label" for="focusedInput2">Разгон до 100 км/ч</label>
+                                <input class="form-control" id="focusedInput2" name="charct5" type="text">
+                            </div>
+
+                            <div class="form-group label-floating col-md-2">
+                                <label class="control-label" for="focusedInput2">Объем двигателя</label>
+                                <input class="form-control" id="focusedInput2" name="charct6" type="text">
+                            </div>
+                        </div>
+                        <br>
                         <input class="btn btn-raised btn-primary" type="submit">
                     </form>
                     <br>

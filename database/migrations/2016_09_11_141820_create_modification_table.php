@@ -14,16 +14,16 @@ class CreateModificationTable extends Migration
     public function up()
     {
         Schema::create('modifications', function (Blueprint $table) {
-            $table->increments('id_modification');
+            $table->increments('id');
             $table->integer('id_series')->unsigned();
             $table->integer('id_model')->unsigned();
             $table->string('name');
             $table->string('year_start_production');
             $table->string('year_end_production');
-            $table->foreign('id_series')->references('id_series')->on('series')
+            $table->foreign('id_series')->references('id')->on('series')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreign('id_model')->references('id_model')->on('models')
+            $table->foreign('id_model')->references('id')->on('models')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });

@@ -1,10 +1,12 @@
-.textbox{
+.textbox {
     border: 1px solid #F9F9F9;
     background-color: #FF6347;
     position: relative;
     color: #fff;
 }
-
+.form-group.label-floating label.control-label{
+    font-size:10px;
+}
 body {
     background:#00BCD4;;
     text-align: center;

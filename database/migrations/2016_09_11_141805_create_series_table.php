@@ -14,14 +14,14 @@ class CreateSeriesTable extends Migration
     public function up()
     {
         Schema::create('series', function (Blueprint $table) {
-            $table->increments('id_series');
+            $table->increments('id');
             $table->integer('id_model')->unsigned();
             $table->integer('id_generation')->unsigned();
             $table->string('name');
-            $table->foreign('id_model')->references('id_model')->on('models')
+            $table->foreign('id_model')->references('id')->on('models')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreign('id_generation')->references('id_generation')->on('generations')
+            $table->foreign('id_generation')->references('id')->on('generations')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });

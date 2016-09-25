@@ -109,7 +109,7 @@
                 $('#carMark').empty().prepend( $('<option value="0">Выберите Марку</option>'));
                 var res = jQuery.parseJSON(msg);
                 for(i=0;i<res.length;i++){
-                    $('#carMark').append('<option value="' + res[i].id_mark + '">' + res[i].name + '</option>');
+                    $('#carMark').append('<option value="' + res[i].id + '">' + res[i].name + '</option>');
                 }
             }}
         )});
@@ -123,7 +123,7 @@
                 $('#carModel').empty().prepend( $('<option value="0">Выберите Модель</option>'));
                 var res = jQuery.parseJSON(msg);
                 for(i=0;i<res.length;i++){
-                    $('#carModel').append('<option value="' + res[i].id_model + '">' + res[i].name + '</option>');
+                    $('#carModel').append('<option value="' + res[i].id + '">' + res[i].name + '</option>');
                 }
             }}
         )});
@@ -137,7 +137,7 @@
                 $('#carGeneration').empty().prepend( $('<option value="0">Выберите Поколение</option>'));
                 var res = jQuery.parseJSON(msg);
                 for(i=0;i<res.length;i++){
-                    $('#carGeneration').append('<option value="' + res[i].id_generation + '">' + res[i].name + '</option>');
+                    $('#carGeneration').append('<option value="' + res[i].id + '">' + res[i].name + '</option>');
                 }
             }}
         )});
@@ -152,7 +152,7 @@
                 var res = jQuery.parseJSON(msg);
                 //console.log(res);
                 for(i=0;i<res.length;i++){
-                    $('#carSerie').append('<option value="' + res[i].id_series + '">' + res[i].name + '</option>');
+                    $('#carSerie').append('<option value="' + res[i].id + '">' + res[i].name + '</option>');
                 }
             }}
         )});
@@ -166,7 +166,7 @@
                 $('#carModification').empty().prepend( $('<option value="0">Выберите Модификацию</option>'));
                 var res = jQuery.parseJSON(msg);
                 for(i=0;i<res.length;i++){
-                    $('#carModification').append('<option value="' + res[i].id_modification + '">' + res[i].name + '</option>');
+                    $('#carModification').append('<option value="' + res[i].id + '">' + res[i].name + '</option>');
                 }
             }}
         )});

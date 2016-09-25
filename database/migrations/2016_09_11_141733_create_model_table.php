@@ -14,10 +14,10 @@ class CreateModelTable extends Migration
     public function up()
     {
         Schema::create('models', function (Blueprint $table) {
-            $table->increments('id_model');
+            $table->increments('id');
             $table->integer('id_mark')->unsigned();
             $table->string('name');
-            $table->foreign('id_mark')->references('id_mark')->on('marks')
+            $table->foreign('id_mark')->references('id')->on('marks')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });

@@ -14,15 +14,15 @@ class CreateCharacteristicValueTable extends Migration
     public function up()
     {
         Schema::create('characteristic_values', function (Blueprint $table) {
-            $table->increments('id_characteristic_value');
+            $table->increments('id');
             $table->integer('id_characteristic')->unsigned();
             $table->integer('id_modification')->unsigned();
             $table->string('value');
-            $table->string('unit');
-            $table->foreign('id_characteristic')->references('id_characteristic')->on('characteristics')
+            $table->string('unit')->default(" ");
+            $table->foreign('id_characteristic')->references('id')->on('characteristics')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreign('id_modification')->references('id_modification')->on('modifications')
+            $table->foreign('id_modification')->references('id')->on('modifications')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });

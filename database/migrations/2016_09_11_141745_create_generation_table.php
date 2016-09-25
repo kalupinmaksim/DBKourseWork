@@ -14,12 +14,12 @@ class CreateGenerationTable extends Migration
     public function up()
     {
         Schema::create('generations', function (Blueprint $table) {
-            $table->increments('id_generation');
+            $table->increments('id');
             $table->string('name');
             $table->integer('id_model')->unsigned();;
             $table->string('year_start');
             $table->string('year_end');
-            $table->foreign('id_model')->references('id_model')->on('models')
+            $table->foreign('id_model')->references('id')->on('models')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });

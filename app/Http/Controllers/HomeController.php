@@ -50,41 +50,70 @@ class HomeController extends Controller
         return view('admin_panel');
     }
     // добавление данных в БД
+    //вспомогательна ф-я для добавления в таблицу char_value
+
     function addDB_admin(Request $data){
         if($data->mark!=""){
-            $mark = new Mark;
-            $mark->name = $data->mark;
+            $mark = Mark::firstOrCreate(['name' => $data->mark]);
             $mark->save();
             $id_mark = $mark->id;
+
             if($data->model!=""){
-                $model = new CarModel;
-                $model->id_mark = $id_mark;
-                $model->name = $data->model;
+                $model = CarModel::firstOrCreate([
+                    'name' => $data->model,
+                    'id_mark' => $id_mark
+                ]);
                 $model->save();
                 $id_model = $model->id;
+
                 if($data->generation!=""){
-                    $generation = new Generation;
-                    $generation->id_model = $id_model;
-                    $generation->year_start = $data->year_start;
-                    $generation->year_end = $data->year_end;
-                    $generation->name = $data->generation;
+                    $generation = Generation::firstOrCreate([
+                        'name' => $data->generation,
+                        'year_start' => $data->year_start,
+                        'year_end' => $data->year_end,
+                        'id_model' => $id_model
+                    ]);
                     $generation->save();
                     $id_generation = $generation->id;
+
                     if($data->serie!=""){
-                        $serie = new Serie;
-                        $serie->id_model = $id_model ;
-                        $serie->id_generation = $id_generation;
-                        $serie->name = $data->serie;
+                        $serie = Serie::firstOrCreate([
+                            'name' => $data->serie,
+                            'id_model' =>  $id_model,
+                            'id_generation' => $id_generation
+                        ]);
                         $serie->save();
                         $id_serie = $serie->id;
+
                         if($data->modification!=""){
-                            $modification = new Modification;
-                            $modification->id_model = $id_model ;
-                            $modification->id_series = $id_serie;
-                            $modification->year_start_production = $data->year_start_production;
-                            $modification->year_end_production = $data->year_end_production;
-                            $modification->name = $data->modification;
+                            $modification = Modification::firstOrCreate([
+                                'name' => $data->modification,
+                                'id_model' => $id_model,
+                                'id_series' => $id_serie,
+                                'year_start_production' => $data->year_start_production,
+                                'year_end_production' => $data->year_end_production
+                            ]);
                             $modification->save();
+                            $id_modification = $modification->id;
+
+                            if($data->enginepower!=""){
+                                addChar_value('1',$id_modification,$data->enginepower);
+                            }
+                            if($data->charct2!=""){
+                                addChar_value('2',$id_modification,$data->charct2);
+                            }
+                            if($data->charct3!=""){
+                                addChar_value('3',$id_modification,$data->charct3);
+                            }
+                            if($data->charct4!=""){
+                                addChar_value('4',$id_modification,$data->charct4);
+                            }
+                            if($data->charct5!=""){
+                                addChar_value('5',$id_modification,$data->charct5);
+                            }
+                            if($data->charct6!=""){
+                                addChar_value('6',$id_modification,$data->charct6);
+                            }
                         }
 
                     }
@@ -94,4 +123,14 @@ class HomeController extends Controller
             return redirect('/');
         }
     }
+
+
+}
+function addChar_value($id_characteristic,$id_modification,$value){
+    $char = Characteristic_value::firstOrCreate([
+        'id_characteristic' => $id_characteristic,
+        'id_modification' => $id_modification,
+        'value' => $value
+    ]);
+    $char->save();
 }

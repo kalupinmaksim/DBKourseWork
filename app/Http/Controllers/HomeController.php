@@ -13,8 +13,30 @@ use App\Serie;
 use App\Modification;
 use App\Characteristic;
 use App\Characteristic_value;
+
 class HomeController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //return view('home');
+        return view('start');
+    }
+
     function get(Request $data){
         //TODO: заменить на свич
         if($data->name=='mark'){
@@ -38,10 +60,9 @@ class HomeController extends Controller
             $model = array('characteristik'=>$model1,'value'=>$char);
             return json_encode($model);
         }
-
-
         return $model;
     }
+
     function start(){
         return view('start');
     }
@@ -99,6 +120,7 @@ class HomeController extends Controller
                             if($data->enginepower!=""){
                                 addChar_value('1',$id_modification,$data->enginepower);
                             }
+
                             if($data->charct2!=""){
                                 addChar_value('2',$id_modification,$data->charct2);
                             }
@@ -123,7 +145,63 @@ class HomeController extends Controller
             return redirect('/');
         }
     }
+    public function updateDB(Request $data){
+        if($data->act=='update'){
+            switch ($data->name) {
+                case 'mark':
+                    $obj = Mark::find($data->id);
+                    $obj->name=$data->newName;
+                    $obj->save();
+                    break;
+                case 'model':
+                    $update = CarModel::find($data->id);
+                    $update->name=$data->newName;
+                    $update->save();
+                    break;
+                case 'generation':
+                    $update = Generation::find($data->id);
+                    $update->name=$data->newName;
+                    $update->save();
+                    break;
+                case 'serie':
+                    $update = Serie::find($data->id);
+                    $update->name=$data->newName;
+                    $update->save();
+                    break;
+                case 'modification':
+                    $update = Modification::find($data->id);
+                    $update->name=$data->newName;
+                    $update->save();
+                    break;
+            }
+        }
 
+        if ($data->act=='delete'){
+            switch ($data->name) {
+                case 'mark':
+                    $delete = Mark::find($data->id);
+                    $delete->delete();
+                    break;
+                case 'model':
+                    $delete = CarModel::find($data->id);
+                    $delete->delete();
+                    break;
+                case 'generation':
+                    $delete = Generation::find($data->id);
+                    $delete->delete();
+                    break;
+                case 'serie':
+                    $delete = Serie::find($data->id);
+                    $delete->delete();
+                    break;
+                case 'modification':
+                    $update = Modification::find($data->id);
+                    $update->name=$data->newName;
+                    $update->save();
+                    break;
+            }
+        }
+    }
 
 }
 function addChar_value($id_characteristic,$id_modification,$value){

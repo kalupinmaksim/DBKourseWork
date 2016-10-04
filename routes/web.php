@@ -19,4 +19,10 @@ Route::post('/', 'HomeController@get');
 Route::get('/admin', 'HomeController@start_admin_panel');
 Route::post('/AddData', 'HomeController@addDB_admin');
 
+Route::post('/UpdateData', 'HomeController@updateDB');
 
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');

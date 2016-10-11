@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.homelay')
 
 @section('content')
 <div class="container">
@@ -67,8 +67,8 @@
                         </div>
 
                         <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
+                            <div>
+                                <button type="submit" class="btn btn-raised btn-primary">
                                     Register
                                 </button>
                             </div>

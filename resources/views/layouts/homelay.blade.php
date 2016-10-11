@@ -53,6 +53,7 @@
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li>
+                                <a href="{{url('/profile')}}">Profile</a>
                                 <a href="{{ url('/logout') }}" >
                                     Logout
                                 </a>
@@ -71,11 +72,7 @@
     @yield('content')
 
     <script src="js/jquery.js"></script>
-    <script>
-        function tab(){
-
-        }
-    </script>
+    @yield('script')
     <script src="js/material.js"></script>
     <script>
         $.material.init();

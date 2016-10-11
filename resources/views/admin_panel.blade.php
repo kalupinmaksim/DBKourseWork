@@ -1,20 +1,6 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-material-design.css">
-    <link href="css/ripples.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+@extends('layouts.homelay')
 
-
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-</head>
-<body>
+@section('content')
 <div class="container">
     <div class="row">
         <div class="col-sm-12 card card-1">
@@ -188,12 +174,6 @@
     </div>
 </div>
 
-
-<script src="js/jquery.js"></script>
-<script src="js/material.js"></script>
-<script>
-    $.material.init();
-</script>
 <script type="text/javascript">
     var UpdateName;
     var UpdateID;
@@ -274,5 +254,4 @@
 
 
 </script>
-</body>
-</html>
+@endsection

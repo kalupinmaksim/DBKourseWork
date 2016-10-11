@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Model;
 use Illuminate\Http\Request;
-//gzip
 use App\Http\Requests;
 use App\Mark;
 use App\CarModel;
@@ -13,6 +13,7 @@ use App\Serie;
 use App\Modification;
 use App\Characteristic;
 use App\Characteristic_value;
+use App\Userauto;
 
 class HomeController extends Controller
 {
@@ -203,6 +204,38 @@ class HomeController extends Controller
         }
     }
 
+    public function rent(Request $data){
+        $rent = Userauto::firstOrCreate([
+            'id_user' => Auth::id(),
+            'id_mark' => $data->mark,
+            'id_model' => $data->model,
+            'id_generation' => $data->generation,
+            'id_serie' => $data->serie,
+            'id_modification' => $data->modification,
+        ]);
+        $rent->save();
+    }
+
+    public function ProfileContent(){
+        $userAuto = Userauto::find(Auth::id());
+        $userMark = Mark::find($userAuto->id_mark);
+        $userModel = CarModel::find($userAuto->id_model);
+        $userGeneration = Generation::find($userAuto->id_generation);
+        $userSerie = Serie::find($userAuto->id_serie);
+        $userModificarion = Modification::find($userAuto->id_modification);
+
+        return view('profile', ['mark'=>$userMark->name,
+            'model'=>$userModel->name,
+            'generation'=>$userGeneration->name,
+            'serie'=>$userSerie->name,
+            'modification'=>$userModificarion->name,
+            'id_modification'=>$userModificarion->id,
+            'rentDate'=>$userAuto->created_at]);
+    }
+
+    public function addcomment(Request $data){
+
+    }
 }
 function addChar_value($id_characteristic,$id_modification,$value){
     $char = Characteristic_value::firstOrCreate([

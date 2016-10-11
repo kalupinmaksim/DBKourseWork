@@ -1,18 +1,6 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-material-design.css">
-    <link href="css/ripples.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-</head>
-<body>
+@extends('layouts.homelay')
+
+@section('content')
 <div class="container">
     <div class="row">
         <div class="col-sm-12 ">
@@ -89,7 +77,7 @@
                     </div>
                 </div>
             </div>
-            <a href="admin" class="btn btn-raised btn-primary">Admin Panel</a>
+            <input id="arendBtn" style="visibility: hidden;" type="submit" class="btn btn-raised btn-primary" value="Арендовать">
         </div>
     </div>
 </div>
@@ -100,84 +88,68 @@
         $.material.init();
     </script>
 <script type="text/javascript">
-    jQuery('body').on('change','#carType',function(){
+    var mark;
+    var model;
+    var generation;
+    var serie;
+    var modification;
+    function request(name, sel, optName, mark, model, generation, serie) {
         jQuery.ajax({
             type: "POST",
             url: '/test/public/',
-            data: {'_token': '{{ csrf_token() }}', 'name':'mark' },
-            success: function( msg ) {
-                $('#carMark').empty().prepend( $('<option value="0">Выберите Марку</option>'));
+            data: {
+                '_token': '{{ csrf_token() }}',
+                'name': name,
+                'mark': mark,
+                'model': model,
+                'generation': generation,
+                'serie': serie
+            },
+            success: function (msg) {
+                $('#' + sel).empty().prepend($('<option value="0">Выберите' + optName + '</option>'));
                 var res = jQuery.parseJSON(msg);
-                for(i=0;i<res.length;i++){
-                    $('#carMark').append('<option value="' + res[i].id + '">' + res[i].name + '</option>');
+                for (i = 0; i < res.length; i++) {
+                    $('#' + sel).append('<option value="' + res[i].id + '">' + res[i].name + '</option>');
                 }
-            }}
-        )});
 
-    jQuery('body').on('change','#carMark',function(){
-        jQuery.ajax({
-            type: "POST",
-            url: '/test/public/',
-            data: {'_token': '{{ csrf_token() }}', 'name':'model','mark': $("select#carMark").val()},
-            success: function( msg ) {
-                $('#carModel').empty().prepend( $('<option value="0">Выберите Модель</option>'));
-                var res = jQuery.parseJSON(msg);
-                for(i=0;i<res.length;i++){
-                    $('#carModel').append('<option value="' + res[i].id + '">' + res[i].name + '</option>');
-                }
-            }}
-        )});
+            }
+        })
+    }
+    jQuery('body').on('change', '#carType', function () {
+        request('mark', 'carMark', 'Марку');
+    });
 
-    jQuery('body').on('change','#carModel',function(){
-        jQuery.ajax({
-            type: "POST",
-            url: '/test/public/',
-            data: {'_token': '{{ csrf_token() }}', 'name':'generation','model': $("select#carModel").val()},
-            success: function( msg ) {
-                $('#carGeneration').empty().prepend( $('<option value="0">Выберите Поколение</option>'));
-                var res = jQuery.parseJSON(msg);
-                for(i=0;i<res.length;i++){
-                    $('#carGeneration').append('<option value="' + res[i].id + '">' + res[i].name + '</option>');
-                }
-            }}
-        )});
+    jQuery('body').on('change', '#carMark', function () {
+        mark = $("select#carMark").val();
+        request('model', 'carModel', 'Модель', $("select#carMark").val());
+    });
 
-    jQuery('body').on('change','#carGeneration',function(){
-        jQuery.ajax({
-            type: "POST",
-            url: '/test/public/',
-            data: {'_token': '{{ csrf_token() }}', 'name':'serie','model': $("select#carModel").val(),'generation': $("select#carGeneration").val()},
-            success: function( msg ) {
-                $('#carSerie').empty().prepend( $('<option value="0">Выберите Серию</option>'));
-                var res = jQuery.parseJSON(msg);
-                //console.log(res);
-                for(i=0;i<res.length;i++){
-                    $('#carSerie').append('<option value="' + res[i].id + '">' + res[i].name + '</option>');
-                }
-            }}
-        )});
+    jQuery('body').on('change', '#carModel', function () {
+        model = $("select#carModel").val();
+        request('generation', 'carGeneration', 'Поколение', undefined, $("select#carModel").val());
+    });
 
-    jQuery('body').on('change','#carSerie',function(){
-        jQuery.ajax({
-            type: "POST",
-            url: '/test/public/',
-            data: {'_token': '{{ csrf_token() }}', 'name':'modification','model': $("select#carModel").val(),'serie': $("select#carSerie").val()},
-            success: function( msg ) {
-                $('#carModification').empty().prepend( $('<option value="0">Выберите Модификацию</option>'));
-                var res = jQuery.parseJSON(msg);
-                for(i=0;i<res.length;i++){
-                    $('#carModification').append('<option value="' + res[i].id + '">' + res[i].name + '</option>');
-                }
-            }}
-        )});
+    jQuery('body').on('change', '#carGeneration', function () {
+        generation = $("select#carGeneration").val();
+        request('serie', 'carSerie', 'Серию', undefined, $("select#carModel").val(), $("select#carGeneration").val());
+    });
+
+    jQuery('body').on('change', '#carSerie', function () {
+        serie = $("select#carSerie").val();
+        request('modification', 'carModification', 'Модификацию', undefined, $("select#carModel").val(), undefined, $("select#carSerie").val());
+    });
 //-------------------------ВЫВОД ХАРАКТЕРИСТИК---------
     jQuery('body').on('change','#carModification',function(){
+        modification = $("select#carModification").val();
         jQuery.ajax({
             type: "POST",
             url: '/test/public/',
             data: {'_token': '{{ csrf_token() }}', 'name':'characteristic','modification': $("select#carModification").val()},
             success: function( msg ) {
+                document.getElementById('arendBtn').style.visibility='visible';
                 var res = jQuery.parseJSON(msg);
+                $("#characteristic").empty();
+                $("#charValue").empty();
                 for(i=0;i<res.characteristik.length;i++)
                 {
                     if(typeof res.value[i].value !== "undefined"){
@@ -188,8 +160,22 @@
                 }
             }}
         )});
-
+//-------------------АРЕНДА--------
+    jQuery('body').on('click','#arendBtn',function(){
+        jQuery.ajax({
+            type: "POST",
+            url: '/test/public/arend',
+            data: {'_token': '{{ csrf_token() }}',
+                'mark': mark,
+                'model': model,
+                'generation': generation,
+                'serie': serie,
+                'modification': modification
+            },
+            success: function( msg ) {
+                location.reload();
+            }}
+        )});
 
 </script>
-</body>
-</html>
+@endsection

@@ -1,3 +1,12 @@
+.control-label{
+    color:black;
+}
+body{
+    font-size:1.5em;
+}
+#comment{ border: solid #00BCD4 1px;
+border-radius: 5px;}
+
 .textbox {
     border: 1px solid #F9F9F9;
     background-color: #FF6347;
@@ -30,3 +39,4 @@ body {
 .HiddenInputs{
     visibility: hidden;
 }
+

@@ -26,3 +26,13 @@ Route::post('/UpdateData', 'HomeController@updateDB');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
+Route::get('/logout', function (){
+    Auth::logout();
+    return redirect('home');
+});
+
+Route::post('/arend', 'HomeController@rent');
+
+Route::get('/profile', 'HomeController@ProfileContent');
+Route::post('/addcomment', "HomeController@addcomment");

@@ -3,172 +3,184 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-sm-12 card card-1">
-            <div class="textbox h2">Insert</div>
-            <form action="AddData" method="post">
-                {{ csrf_field() }}
-
-                <div class="form-group is-empty">
-                    <label for="inputEmail" class="col-md-2 control-label">Марка</label>
-                    <div class="col-md-10">
-                        <input class="form-control" id="mark" type="text" name="mark" placeholder="Mark">
-                    </div>
+        <div class="card-1">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Insert</h3>
                 </div>
+                <div class="panel-body">
+                    <form action="AddData" method="post">
+                        {{ csrf_field() }}
 
-                <div class="form-group is-empty">
-                    <label for="model" class="col-md-2 control-label">Модель</label>
-                    <div class="col-md-10">
-                        <input class="form-control" id="model" name="model" placeholder="Model">
-                    </div>
+                        <div class="form-group is-empty">
+                            <label for="inputEmail" class="col-md-2 control-label">Марка</label>
+                            <div class="col-md-10">
+                                <input class="form-control" id="mark" type="text" name="mark" placeholder="Mark">
+                            </div>
+                        </div>
+
+                        <div class="form-group is-empty">
+                            <label for="model" class="col-md-2 control-label">Модель</label>
+                            <div class="col-md-10">
+                                <input class="form-control" id="model" name="model" placeholder="Model">
+                            </div>
+                        </div>
+
+                        <div class="form-group is-empty">
+                            <label for="generation" class="col-md-2 control-label">Поколение</label>
+                            <div class="col-md-4">
+                                <input class="form-control" id="generation" name="generation" placeholder="Generation">
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control" name="year_start" placeholder="year_start">
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control" name="year_end" placeholder="year_end">
+                            </div>
+                        </div>
+
+                        <div class="form-group is-empty">
+                            <label for="serie" class="col-md-2 control-label">Серия</label>
+                            <div class="col-md-10">
+                                <input class="form-control" id="serie" name="serie" placeholder="Serie">
+                            </div>
+                        </div>
+
+                        <div class="form-group is-empty">
+                            <label for="modification" class="col-md-2 control-label">Модификация</label>
+                            <div class="col-md-4">
+                                <input class="form-control" id="modification" name="modification" placeholder="Модификация">
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control" name="year_start_production" placeholder="year_start_production">
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control" name="year_end_production" placeholder="year_end_production">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group is-empty">
+                            <div class="form-group label-floating  col-md-2">
+                                <label class="control-label" for="enginepower">Мощность Двигателя</label>
+                                <input class="form-control" id="enginepower" name="enginepower" type="text">
+                            </div>
+
+                            <div class="form-group label-floating col-md-2">
+                                <label class="control-label" for="focusedInput2">КПП</label>
+                                <input class="form-control" id="focusedInput2" name="charct2" type="text">
+                            </div>
+
+                            <div class="form-group label-floating col-md-2">
+                                <label class="control-label" for="focusedInput2">Топливо</label>
+                                <input class="form-control" id="focusedInput2" name="charct3" type="text">
+                            </div>
+
+                            <div class="form-group label-floating col-md-2">
+                                <label class="control-label" for="maximumSpeed">Макс. скорость</label>
+                                <input class="form-control" id="maximumSpeed" name="charct4" type="text">
+                            </div>
+
+                            <div class="form-group label-floating col-md-2">
+                                <label class="control-label" for="focusedInput2">Разгон до 100 км/ч</label>
+                                <input class="form-control" id="focusedInput2" name="charct5" type="text">
+                            </div>
+
+                            <div class="form-group label-floating col-md-2">
+                                <label class="control-label" for="focusedInput2">Объем двигателя</label>
+                                <input class="form-control" id="focusedInput2" name="charct6" type="text">
+                            </div>
+                        </div>
+                        <br>
+                        <input class="btn btn-raised btn-primary" type="submit">
+                    </form>
+                    <br>
                 </div>
-
-                <div class="form-group is-empty">
-                    <label for="generation" class="col-md-2 control-label">Поколение</label>
-                    <div class="col-md-4">
-                        <input class="form-control" id="generation" name="generation" placeholder="Generation">
-                    </div>
-                    <div class="col-md-3">
-                        <input class="form-control" name="year_start" placeholder="year_start">
-                    </div>
-                    <div class="col-md-3">
-                        <input class="form-control" name="year_end" placeholder="year_end">
-                    </div>
-                </div>
-
-                <div class="form-group is-empty">
-                    <label for="serie" class="col-md-2 control-label">Серия</label>
-                    <div class="col-md-10">
-                        <input class="form-control" id="serie" name="serie" placeholder="Serie">
-                    </div>
-                </div>
-
-                <div class="form-group is-empty">
-                    <label for="modification" class="col-md-2 control-label">Модификация</label>
-                    <div class="col-md-4">
-                        <input class="form-control" id="modification" name="modification" placeholder="Модификация">
-                    </div>
-                    <div class="col-md-3">
-                        <input class="form-control" name="year_start_production" placeholder="year_start_production">
-                    </div>
-                    <div class="col-md-3">
-                        <input class="form-control" name="year_end_production" placeholder="year_end_production">
-                    </div>
-                </div>
-                <br>
-                <div class="form-group is-empty">
-                    <div class="form-group label-floating  col-md-2">
-                        <label class="control-label" for="enginepower">Мощность Двигателя</label>
-                        <input class="form-control" id="enginepower" name="enginepower" type="text">
-                    </div>
-
-                    <div class="form-group label-floating col-md-2">
-                        <label class="control-label" for="focusedInput2">КПП</label>
-                        <input class="form-control" id="focusedInput2" name="charct2" type="text">
-                    </div>
-
-                    <div class="form-group label-floating col-md-2">
-                        <label class="control-label" for="focusedInput2">Топливо</label>
-                        <input class="form-control" id="focusedInput2" name="charct3" type="text">
-                    </div>
-
-                    <div class="form-group label-floating col-md-2">
-                        <label class="control-label" for="maximumSpeed">Макс. скорость</label>
-                        <input class="form-control" id="maximumSpeed" name="charct4" type="text">
-                    </div>
-
-                    <div class="form-group label-floating col-md-2">
-                        <label class="control-label" for="focusedInput2">Разгон до 100 км/ч</label>
-                        <input class="form-control" id="focusedInput2" name="charct5" type="text">
-                    </div>
-
-                    <div class="form-group label-floating col-md-2">
-                        <label class="control-label" for="focusedInput2">Объем двигателя</label>
-                        <input class="form-control" id="focusedInput2" name="charct6" type="text">
-                    </div>
-                </div>
-                <br>
-                <input class="btn btn-raised btn-primary" type="submit">
-            </form>
-            <br>
+            </div>
         </div>
     </div>
     <br>
     <div class="row">
-        <div class="col-sm-12 card card-1">
-            <div class="textbox h2">Update/Delete</div>
+        <div class="card-1">
 
-            <div class="col-sm-12 table-list">
-                <div class="form-group is-empty">
-                    <label for="carType" class="col-md-2 control-label">Вид транспорта</label>
-                    <div class="col-md-10">
-                        <select class="form-control" name="carType" id="carType">
-                            <option value="">Укажите вид транспорта</option>
-                            <option value="1">легковые</option>
-                        </select>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Update/Delete</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-12 table-list">
+                        <div class="form-group is-empty">
+                            <label for="carType" class="col-md-2 control-label">Вид транспорта</label>
+                            <div class="col-md-10">
+                                <select class="form-control" name="carType" id="carType">
+                                    <option value="">Укажите вид транспорта</option>
+                                    <option value="1">легковые</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group is-empty">
+                            <label for="carMark" class="col-md-2 control-label">Марка</label>
+                            <div class="col-md-10">
+                                <select class="form-control" name="carMark" id="carMark">
+                                    <option value="">-</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group is-empty">
+                            <label for="carModel" class="col-md-2 control-label">Модель</label>
+                            <div class="col-md-10">
+                                <select class="form-control" name="carModel" id="carModel">
+                                    <option value="">-</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group is-empty">
+                            <label for="carGeneration" class="col-md-2 control-label">Поколение</label>
+                            <div class="col-md-10">
+                                <select class="form-control" name="carGeneration" id="carGeneration">
+                                    <option value="">-</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group is-empty">
+                            <label for="carSerie" class="col-md-2 control-label">Серия</label>
+                            <div class="col-md-10">
+                                <select class="form-control" name="carSerie" id="carSerie">
+                                    <option value="">-</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group is-empty">
+                            <label for="carModification" class="col-md-2 control-label">Модификация</label>
+                            <div class="col-md-10">
+                                <select class="form-control" name="carModification" id="carModification">
+                                    <option value="">-</option>
+                                </select>
+                                <select class="form-control" style="display:none" name="carModificationEquipment"
+                                        id="carModificationEquipment">
+                                    <option value="">-</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <form method="post" action="UpdateData">
+
+                            <div class="form-group label-floating col-md-12">
+                                <label id="labelname" class="control-label" for="NewName">Новое имя поля</label>
+                                <input class="form-control" id="NewName" name="newName" type="text">
+                            </div>
+
+                            <div class="col-md-12">
+                                <input id="updateBtn" class="btn btn-raised btn-primary" value="Update" type="button">
+                                <input type="button" id="deleteBtn" class="btn btn-raised btn-danger" value="delete">
+                            </div>
+                        </form>
                     </div>
                 </div>
-
-                <div class="form-group is-empty">
-                    <label for="carMark" class="col-md-2 control-label">Марка</label>
-                    <div class="col-md-10">
-                        <select class="form-control" name="carMark" id="carMark">
-                            <option value="">-</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group is-empty">
-                    <label for="carModel" class="col-md-2 control-label">Модель</label>
-                    <div class="col-md-10">
-                        <select class="form-control" name="carModel" id="carModel">
-                            <option value="">-</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group is-empty">
-                    <label for="carGeneration" class="col-md-2 control-label">Поколение</label>
-                    <div class="col-md-10">
-                        <select class="form-control" name="carGeneration" id="carGeneration">
-                            <option value="">-</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group is-empty">
-                    <label for="carSerie" class="col-md-2 control-label">Серия</label>
-                    <div class="col-md-10">
-                        <select class="form-control" name="carSerie" id="carSerie">
-                            <option value="">-</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group is-empty">
-                    <label for="carModification" class="col-md-2 control-label">Модификация</label>
-                    <div class="col-md-10">
-                        <select class="form-control" name="carModification" id="carModification">
-                            <option value="">-</option>
-                        </select>
-                        <select class="form-control" style="display:none" name="carModificationEquipment"
-                                id="carModificationEquipment">
-                            <option value="">-</option>
-                        </select>
-                    </div>
-                </div>
-
-                <form method="post" action="UpdateData">
-
-                    <div class="form-group label-floating col-md-12">
-                        <label id="labelname" class="control-label" for="NewName">Новое имя поля</label>
-                        <input class="form-control" id="NewName" name="newName" type="text">
-                    </div>
-
-                    <div class="col-md-12">
-                        <input id="updateBtn" class="btn btn-raised btn-primary" value="Update" type="button">
-                        <input type="button" id="deleteBtn" class="btn btn-raised btn-danger" value="delete">
-                    </div>
-                </form>
             </div>
         </div>
     </div>

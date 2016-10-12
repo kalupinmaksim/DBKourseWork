@@ -14,6 +14,7 @@ use App\Modification;
 use App\Characteristic;
 use App\Characteristic_value;
 use App\Userauto;
+use App\Comment;
 
 class HomeController extends Controller
 {
@@ -58,7 +59,8 @@ class HomeController extends Controller
         if($data->name=='characteristic'){
             $model1 = Characteristic::all();
             $char = Characteristic_value::where('id_modification','=',$data->modification)->get();
-            $model = array('characteristik'=>$model1,'value'=>$char);
+            $comment = Comment::where('id_modification','=',$data->modification)->get();
+            $model = array('characteristik'=>$model1,'value'=>$char, 'comment'=>$comment);
             return json_encode($model);
         }
         return $model;
@@ -71,9 +73,8 @@ class HomeController extends Controller
     function start_admin_panel(){
         return view('admin_panel');
     }
-    // добавление данных в БД
-    //вспомогательна ф-я для добавления в таблицу char_value
 
+    // добавление данных в БД
     function addDB_admin(Request $data){
         if($data->mark!=""){
             $mark = Mark::firstOrCreate(['name' => $data->mark]);
@@ -233,10 +234,19 @@ class HomeController extends Controller
             'rentDate'=>$userAuto->created_at]);
     }
 
-    public function addcomment(Request $data){
-
+    public function AddComment(Request $data){
+        $comment = Comment::firstOrCreate([
+            'id_user' => Auth::id(),
+            'id_modification' => $data->modification,
+            'comment' => $data-> comment
+        ]);
+        $comment->save();
+        return redirect('/profile');
     }
 }
+
+
+
 function addChar_value($id_characteristic,$id_modification,$value){
     $char = Characteristic_value::firstOrCreate([
         'id_characteristic' => $id_characteristic,

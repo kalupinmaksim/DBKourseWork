@@ -35,4 +35,4 @@ Route::get('/logout', function (){
 Route::post('/arend', 'HomeController@rent');
 
 Route::get('/profile', 'HomeController@ProfileContent');
-Route::post('/addcomment', "HomeController@addcomment");
+Route::post('/AddComment', 'HomeController@AddComment');

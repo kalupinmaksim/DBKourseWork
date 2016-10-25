@@ -47,4 +47,10 @@ body {
 .HiddenInputs{
     visibility: hidden;
 }
+.alertmes{
+    position: fixed;
+    top: 30%;
+    margin-left: 80%;
+    visibility: hidden;
+}
 

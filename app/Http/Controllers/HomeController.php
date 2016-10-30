@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Auth;
 use App\Model;
 use Illuminate\Http\Request;
@@ -221,6 +222,20 @@ class HomeController extends Controller
         $delete = Userauto::where('id_user','=', Auth::id());
         $delete->delete();
         return redirect('/');
+    }
+
+    public function getRentReport(){
+        $userAuto = Userauto::where('id_user','=',Auth::id())->first();
+        if (isset($userAuto)){
+            $user = User::find(Auth::id());
+            $userMark = Mark::find($userAuto->id_mark);
+            $userModel = CarModel::find($userAuto->id_model);
+            $userGeneration = Generation::find($userAuto->id_generation);
+            $userSerie = Serie::find($userAuto->id_serie);
+            $userModificarion = Modification::find($userAuto->id_modification);
+        }
+        echo '<h1>Отчет о аренде автомобиля</h1><br><table border="1"><tr><td>Имя</td><td>Марка</td><td>Модель</td><td>Поколение</td><td>Серия</td><td>Модификация</td><td>Дата Аренды</td></tr>
+<tr><td>'.$user->name.'</td><td>'.$userMark->name.'</td><td>'.$userModel->name.'</td> <td>'.$userGeneration->name.'</td> <td>'.$userSerie->name.'</td> <td>'.$userModificarion->name.'</td><td>'.$userAuto->created_at.'</td></td></tr></table>';
     }
 
     public function ProfileContent(){

@@ -15,6 +15,7 @@ use App\Characteristic;
 use App\Characteristic_value;
 use App\Userauto;
 use App\Comment;
+use App\Rate;
 
 class HomeController extends Controller
 {
@@ -33,45 +34,45 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //return view('home');
-        return view('start');
-    }
-
-    function get(Request $data){
-        //TODO: заменить на свич
-        if($data->name=='mark'){
-            $model = Mark::all()->toJson();
-        }
-        if($data->name=='model'){
-            $model = CarModel::where('id_mark','=',$data->mark)->get()->toJson();
-        }
-        if($data->name=='generation'){
-            $model = Generation::where('id_model','=',$data->model)->get()->toJson();
-        }
-        if($data->name=='serie'){
-            $model = Serie::where('id_model','=',$data->model)->where('id_generation','=',$data->generation)->get()->toJson();
-        }
-        if($data->name=='modification'){
-            $model = Modification::where('id_model','=',$data->model)->where('id_series','=',$data->serie)->get()->toJson();
-        }
-        if($data->name=='characteristic'){
-            $model1 = Characteristic::all();
-            $char = Characteristic_value::where('id_modification','=',$data->modification)->get();
-            $comment = Comment::where('id_modification','=',$data->modification)->get();
-            $model = array('characteristik'=>$model1,'value'=>$char, 'comment'=>$comment);
-            return json_encode($model);
-        }
-        return $model;
-    }
-
     function start(){
         return view('start');
     }
     //Открытие панели админа
     function start_admin_panel(){
         return view('admin_panel');
+    }
+
+    function get(Request $data){
+        switch ($data->name) {
+            case 'mark':
+                $model = Mark::all()->toJson();
+                break;
+            case 'model':
+                $model = CarModel::where('id_mark', '=', $data->mark)->get()->toJson();
+                break;
+            case 'generation':
+                $model = Generation::where('id_model', '=', $data->model)->get()->toJson();
+                break;
+            case 'serie':
+                $model = Serie::where('id_model', '=', $data->model)->where('id_generation', '=', $data->generation)->get()->toJson();
+                break;
+            case 'modification':
+                $model = Modification::where('id_model', '=', $data->model)->where('id_series', '=', $data->serie)->get()->toJson();
+                break;
+            case 'characteristic':
+                $characteristic = Characteristic::all();
+                $modificationData = Modification::find($data->modification);
+                $char = Characteristic_value::where('id_modification', '=', $data->modification)->get();
+                $comment = Comment::where('id_modification', '=', $data->modification)->get();
+
+                $model = array('characteristik' => $characteristic,
+                    'value' => $char,
+                    'comment' => $comment,
+                    'ModificationData' => $modificationData);
+                return json_encode($model);
+                break;
+        }
+        return $model;
     }
 
     // добавление данных в БД
@@ -197,9 +198,8 @@ class HomeController extends Controller
                     $delete->delete();
                     break;
                 case 'modification':
-                    $update = Modification::find($data->id);
-                    $update->name=$data->newName;
-                    $update->save();
+                    $delete = Modification::find($data->id);
+                    $delete->delete();
                     break;
             }
         }
@@ -217,21 +217,35 @@ class HomeController extends Controller
         $rent->save();
     }
 
-    public function ProfileContent(){
-        $userAuto = Userauto::find(Auth::id());
-        $userMark = Mark::find($userAuto->id_mark);
-        $userModel = CarModel::find($userAuto->id_model);
-        $userGeneration = Generation::find($userAuto->id_generation);
-        $userSerie = Serie::find($userAuto->id_serie);
-        $userModificarion = Modification::find($userAuto->id_modification);
+    public function Del_rent(){
+        $delete = Userauto::where('id_user','=', Auth::id());
+        $delete->delete();
+        return redirect('/');
+    }
 
-        return view('profile', ['mark'=>$userMark->name,
-            'model'=>$userModel->name,
-            'generation'=>$userGeneration->name,
-            'serie'=>$userSerie->name,
-            'modification'=>$userModificarion->name,
-            'id_modification'=>$userModificarion->id,
-            'rentDate'=>$userAuto->created_at]);
+    public function ProfileContent(){
+        $userAuto = Userauto::where('id_user','=',Auth::id())->first();
+        if (isset($userAuto)){
+            $userMark = Mark::find($userAuto->id_mark);
+            $userModel = CarModel::find($userAuto->id_model);
+            $userGeneration = Generation::find($userAuto->id_generation);
+            $userSerie = Serie::find($userAuto->id_serie);
+            $userModificarion = Modification::find($userAuto->id_modification);
+
+            return view('profile', ['mark'=>$userMark->name,
+                'model'=>$userModel->name,
+                'generation'=>$userGeneration->name,
+                'serie'=>$userSerie->name,
+                'modification'=>$userModificarion->name,
+                'id_modification'=>$userModificarion->id,
+                'rentDate'=>$userAuto->created_at,
+                'rate'=>($userModificarion->rate/$userModificarion->rateCount)]);
+        }
+        else{
+            return view('profile');
+        }
+
+
     }
 
     public function AddComment(Request $data){
@@ -243,9 +257,19 @@ class HomeController extends Controller
         $comment->save();
         return redirect('/profile');
     }
+
+    public function UpdateRate(Request $data){
+
+        $rate = Rate::firstOrCreate([
+            'id_user' => Auth::id(),
+            'id_modification' => $data->modification,
+            'rate' => $data->rate
+        ]);
+        $update = UpdateRateCar($data->modification,$data->rate);
+        return $update;
+    }
+
 }
-
-
 
 function addChar_value($id_characteristic,$id_modification,$value){
     $char = Characteristic_value::firstOrCreate([
@@ -254,4 +278,13 @@ function addChar_value($id_characteristic,$id_modification,$value){
         'value' => $value
     ]);
     $char->save();
+}
+
+function UpdateRateCar($modofication, $rate){
+    $obj = Modification::find($modofication);
+    $obj->rateCount++;
+    $obj->rate+=$rate;
+    $rating = ($obj->rate)/($obj->rateCount);
+    $obj->save();
+    return $rating;
 }
